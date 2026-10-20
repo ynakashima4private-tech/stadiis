@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>すたでぃぃず</title>
+
+<style>
+:root {
+  --green: #27845b;
+  --dark: #176642;
+  --light: #e8f5ed;
+  --bg: #f4f8f5;
+  --text: #26372d;
+  --muted: #718078;
+  --border: #dce8df;
+  --red: #bd4242;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding-bottom: 85px;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+header {
+  background: var(--green);
+  color: white;
+  padding: 22px 18px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 25px;
+}
+
+header p {
+  margin: 6px 0 0;
+  font-size: 13px;
+}
+
+main {
+  width: min(760px, 100%);
+  margin: auto;
+  padding: 15px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+h2 {
+  font-size: 22px;
+  margin: 8px 0 16px;
+}
+
+h3 {
+  margin: 0 0 12px;
+  font-size: 17px;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 16px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 7px #234d3210;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.big-number {
+  color: var(--dark);
+  font-size: 29px;
+  font-weight: 750;
+  margin-top: 6px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+label {
+  display: block;
+  margin: 13px 0 6px;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccdcd0;
+  border-radius: 10px;
+  background: white;
+  color: var(--text);
+  font: inherit;
+}
+
+textarea {
+  min-height: 78px;
+  resize: vertical;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.primary {
+  color: white;
+  background: var(--green);
+}
+
+.primary:hover {
+  background: var(--dark);
+}
+
+.secondary {
+  background: var(--light);
+  color: var(--dark);
+}
+
+.danger {
+  background: #fff0f0;
+  color: var(--red);
+}
+
+.full {
+  display: block;
+  width: 100%;
+  margin-top: 11px;
+}
+
+.small {
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.nav {
+  position: fixed;
+  z-index: 5;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  background: white;
+  border-top: 1px solid var(--border);
+  padding: 8px 3px max(8px, env(safe-area-inset-bottom));
+}
+
+.nav button {
+  padding: 7px 1px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav button.active {
+  color: var(--dark);
+  background: var(--light);
+}
+
+.icon {
+  font-size: 20px;
+}
+
+.list-item {
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 12px;
+  margin-top: 10px;
+  background: white;
+  overflow-wrap: anywhere;
+}
+
+.list-title {
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.list-meta {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.empty {
+  text-align: center;
+  padding: 20px 8px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.preview-image {
+  display: block;
+  max-width: 100%;
+  max-height: 400px;
+  margin: 12px auto;
+  object-fit: contain;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.photo-card {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px;
+  background: white;
+}
+
+.photo-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  background: #f5f7f5;
+}
+
+.result {
+  padding: 13px;
+  margin-top: 12px;
+  border-radius: 10px;
+  line-height: 1.7;
+}
+
+.right {
+  background: #e6f6eb;
+  color: #176642;
+}
+
+.wrong {
+  background: #fff0f0;
+  color: #a33232;
+}
+
+.progress {
+  height: 9px;
+  background: #e5eee7;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress div {
+  height: 100%;
+  width: 0;
+  background: var(--green);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 18px 0;
+}
+
+@media(max-width:420px) {
+  main {
+    padding: 11px;
+  }
+
+  .card {
+    padding: 13px;
+  }
+
+  .nav button {
+    font-size: 10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>すたでぃぃず</h1>
+  <p>間違いを、できるに変えよう。</p>
+</header>
+
+<main>
+
+<!-- ホーム -->
+<section id="home" class="page active">
+  <h2>ホーム</h2>
+
+  <div class="card">
+    <div class="muted">今日の日付</div>
+    <strong id="today"></strong>
+    <p class="muted">今日も少しずつ学習を進めましょう！</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="muted">登録問題数</div>
+      <div class="big-number" id="total">0</div>
+    </div>
+    <div class="card">
+      <div class="muted">正解回数</div>
+      <div class="big-number" id="correctTotal">0</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>学習の進み具合</h3>
+    <div class="progress"><div id="homeProgress"></div></div>
+    <p class="muted" id="homeProgressText">問題を登録しましょう。</p>
+    <button class="primary full" data-go="register">問題・写真を登録</button>
+    <button class="secondary full" data-go="variants">類題を作る</button>
+    <button class="secondary full" data-go="review">復習を始める</button>
+  </div>
+</section>
+
+<!-- 問題と写真の登録 -->
+<section id="register" class="page">
+  <h2>問題・写真の登録</h2>
+
+  <div class="card">
+    <h3>📸 テストの写真</h3>
+    <p class="muted">iPad内の写真を選択して保存できます。</p>
+
+    <label for="photoInput">写真を選ぶ</label>
+    <input id="photoInput" type="file" accept="image/*">
+
+    <div id="photoPreview"></div>
+
+    <label for="photoName">写真の名前</label>
+    <input id="photoName" placeholder="例：数学のテスト">
+
+    <button id="savePhoto" class="primary full" disabled>写真を保存</button>
+
+    <p class="muted">写真の問題文を自動で読み取る機能はまだありません。</p>
+  </div>
+
+  <div class="card">
+    <h3>✏️ 問題を登録</h3>
+
+    <label for="subject">教科</label>
+    <select id="subject">
+      <option>数学</option>
+      <option>英語</option>
+      <option>国語</option>
+      <option>理科</option>
+      <option>社会</option>
+      <option>その他</option>
+    </select>
+
+    <label for="question">問題文</label>
+    <textarea id="question" placeholder="問題文を入力"></textarea>
+
+    <label for="answer">正解</label>
+    <textarea id="answer" placeholder="正しい答えを入力"></textarea>
+
+    <label for="memo">解き方・メモ（任意）</label>
+    <textarea id="memo" placeholder="解き方など"></textarea>
+
+    <label for="questionPhoto">関連する写真</label>
+    <select id="questionPhoto">
+      <option value="">写真を関連付けない</option>
+    </select>
+
+    <button id="addQuestion" class="primary full">問題を登録</button>
+  </div>
+
+  <div class="card">
+    <h3>保存した写真</h3>
+    <div id="photoList"></div>
+  </div>
+
+  <div class="card">
+    <h3>登録した問題</h3>
+    <div id="questionList"></div>
+  </div>
+</section>
+
+<!-- 類題作成 -->
+<section id="variants" class="page">
+  <h2>類題を作る</h2>
+
+  <div class="card">
+    <h3>① 元の問題を選ぶ</h3>
+    <p class="muted">
+      類題を関連付けたい元の問題を選びます。
+      自動生成の場合も、元の問題の内容を解析しているわけではありません。
+    </p>
+
+    <label for="parentQuestion">元の問題</label>
+    <select id="parentQuestion">
+      <option value="">元の問題を選択してください</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h3>② 自動生成</h3>
+    <p class="muted">
+      対応する数学の形式から、答えを計算できる類題を作ります。
+    </p>
+
+    <label for="generatorType">問題の種類</label>
+    <select id="generatorType">
+      <option value="integer">正負の数（足し算・引き算）</option>
+      <option value="algebra">文字式（同類項をまとめる）</option>
+      <option value="equation">一次方程式</option>
+    </select>
+
+    <button id="generateVariant" class="primary full">類題を自動生成</button>
+
+    <div id="generatedPreview"></div>
+  </div>
+
+  <div class="card">
+    <h3>③ 手動で作成</h3>
+    <p class="muted">
+      自動生成に対応していない問題も、自分で類題を作成できます。
+    </p>
+
+    <label for="manualVariantQuestion">類題の問題文</label>
+    <textarea id="manualVariantQuestion" placeholder="類題の問題文"></textarea>
+
+    <label for="manualVariantAnswer">正解</label>
+    <textarea id="manualVariantAnswer" placeholder="正解を入力"></textarea>
+
+    <label for="manualVariantMemo">解き方・メモ（任意）</label>
+    <textarea id="manualVariantMemo" placeholder="解き方など"></textarea>
+
+    <button id="saveManualVariant" class="primary full">手動で類題を登録</button>
+  </div>
+
+  <div class="card">
+    <h3>作成した類題</h3>
+    <div id="variantList"></div>
+  </div>
+</section>
+
+<!-- 復習 -->
+<section id="review" class="page">
+  <h2>復習</h2>
+
+  <div class="card">
+    <div id="reviewArea" class="empty">
+      問題を登録すると、ここで復習できます。
+    </div>
+  </div>
+</section>
+
+<!-- 学習記録 -->
+<section id="stats" class="page">
+  <h2>学習記録</h2>
+
+  <div class="grid">
+    <div class="card">
+      <div class="muted">登録問題数</div>
+      <div class="big-number" id="statTotal">0</div>
+    </div>
+    <div class="card">
+      <div class="muted">挑戦回数</div>
+      <div class="big-number" id="attemptTotal">0</div>
+    </div>
+    <div class="card">
+      <div class="muted">正解回数</div>
+      <div class="big-number" id="statCorrect">0</div>
+    </div>
+    <div class="card">
+      <div class="muted">正答率</div>
+      <div class="big-number" id="rate">—</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>元の問題と類題</h3>
+    <div id="variantStats"></div>
+  </div>
+
+  <div class="card">
+    <h3>教科別の登録問題数</h3>
+    <div id="subjectStats"></div>
+  </div>
+
+  <div class="card">
+    <h3>教科別の正答率</h3>
+    <div id="subjectAccuracy"></div>
+  </div>
+</section>
+
+<!-- 設定 -->
+<section id="settings" class="page">
+  <h2>設定</h2>
+
+  <div class="card">
+    <h3>問題データのバックアップ</h3>
+    <button id="backup" class="primary full">問題データを保存</button>
+    <button id="photoBackup" class="secondary full">写真も含めてすべて保存</button>
+  </div>
+
+  <div class="card">
+    <h3>バックアップの復元</h3>
+    <p class="muted">
+      バックアップを読み込むと、現在の問題・写真データが置き換わります。
+    </p>
+    <label for="restoreInput">ファイルを選択</label>
+    <input id="restoreInput" type="file" accept=".json,application/json">
+    <button id="restore" class="secondary full">バックアップを復元</button>
+  </div>
+
+  <div class="card">
+    <h3>データについて</h3>
+    <p class="muted">
+      データはブラウザー内に保存されます。
+      ブラウザーのデータ削除や別の端末への変更で、
+      データが消えたり表示されなかったりすることがあります。
+      定期的にバックアップしてください。
+    </p>
+  </div>
+</section>
+
+</main>
+
+<nav class="nav">
+  <button class="active" data-page="home"><span class="icon">🏠</span>ホーム</button>
+  <button data-page="register"><span class="icon">📸</span>登録</button>
+  <button data-page="variants"><span class="icon">🧠</span>類題</button>
+  <button data-page="review"><span class="icon">📚</span>復習</button>
+  <button data-page="stats"><span class="icon">📊</span>記録</button>
+</nav>
+
+<script>
+(() => {
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const QUESTION_KEY = "studyiz_questions_v2";
+const PHOTO_KEY = "studyiz_photos_v2";
+
+let questions = [];
+let photos = [];
+let currentId = null;
+let answered = false;
+let selectedPhotoData = "";
+let selectedPhotoName = "";
+
+function makeId() {
+  return Date.now().toString(36) +
+    Math.random().toString(36).slice(2, 9);
+}
+
+function text(value) {
+  return String(value ?? "");
+}
+
+function escapeHTML(value) {
+  return text(value).replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[ch]);
+}
+
+function normalizeAnswer(value) {
+  return text(value)
+    .trim()
+    .replace(/\s+/g, "")
+    .replace(/−/g, "-")
+    .replace(/＋/g, "+")
+    .replace(/＝/g, "=")
+    .toLowerCase();
+}
+
+function normalizeQuestion(q) {
+  return {
+    id: q.id || makeId(),
+    subject: q.subject || "その他",
+    question: text(q.question),
+    answer: text(q.answer),
+    memo: text(q.memo),
+    attempts: Math.max(0, Number(q.attempts) || 0),
+    correct: Math.max(0, Number(q.correct) || 0),
+    photoId: q.photoId || "",
+    parentId: q.parentId || "",
+    isVariant: Boolean(q.isVariant),
+    generatorType: q.generatorType || "",
+    createdAt: q.createdAt || new Date().toISOString()
+  };
+}
+
+function loadData() {
+  try {
+    const oldQuestions = localStorage.getItem(QUESTION_KEY);
+    const oldPhotos = localStorage.getItem(PHOTO_KEY);
+
+    if (oldQuestions) {
+      const data = JSON.parse(oldQuestions);
+      if (Array.isArray(data)) {
+        questions = data.map(normalizeQuestion);
+      }
+    }
+
+    if (oldPhotos) {
+      const data = JSON.parse(oldPhotos);
+      if (Array.isArray(data)) {
+        photos = data.filter(p => p && typeof p.data === "string");
+      }
+    }
+  } catch (error) {
+    alert("保存データの読み込みに失敗しました。バックアップを確認してください。");
+  }
+}
+
+function saveQuestions() {
+  try {
+    localStorage.setItem(QUESTION_KEY, JSON.stringify(questions));
+    return true;
+  } catch (error) {
+    alert("問題を保存できませんでした。保存容量を確認してください。");
+    return false;
+  }
+}
+
+function savePhotos() {
+  try {
+    localStorage.setItem(PHOTO_KEY, JSON.stringify(photos));
+    return true;
+  } catch (error) {
+    alert("写真を保存できませんでした。写真の容量を小さくしてください。");
+    return false;
+  }
+}
+
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.toggle("active", p.id === id);
+  });
+
+  document.querySelectorAll(".nav button").forEach(b => {
+    b.classList.toggle("active", b.dataset.page === id);
+  });
+
+  if (id === "register") {
+    renderPhotoList();
+    renderQuestionList();
+    renderPhotoOptions();
+  }
+
+  if (id === "variants") {
+    renderParentOptions();
+    renderVariantList();
+  }
+
+  if (id === "review") renderReview();
+  if (id === "stats") renderStats();
+}
+
+document.querySelectorAll(".nav button").forEach(button => {
+  button.addEventListener("click", () => showPage(button.dataset.page));
+});
+
+document.querySelectorAll("[data-go]").forEach(button => {
+  button.addEventListener("click", () => showPage(button.dataset.go));
+});
+
+// 写真を選択してプレビュー
+$("photoInput").addEventListener("change", event => {
+  const file = event.target.files[0];
+
+  selectedPhotoData = "";
+  selectedPhotoName = "";
+  $("savePhoto").disabled = true;
+  $("photoPreview").innerHTML = "";
+
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("画像ファイルを選んでください。");
+    event.target.value = "";
+    return;
+  }
+
+  selectedPhotoName = file.name;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    const image = new Image();
+
+    image.onload = () => {
+      const max = 1400;
+      const scale = Math.min(
+        1,
+        max / Math.max(image.naturalWidth, image.naturalHeight)
+      );
+
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+      canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+
+      canvas.getContext("2d").drawImage(
+        image, 0, 0, canvas.width, canvas.height
+      );
+
+      selectedPhotoData = canvas.toDataURL("image/jpeg", 0.78);
+
+      const preview = document.createElement("img");
+      preview.className = "preview-image";
+      preview.src = selectedPhotoData;
+      preview.alt = "選択した写真";
+
+      $("photoPreview").replaceChildren(preview);
+      $("savePhoto").disabled = false;
+    };
+
+    image.onerror = () => alert("この画像を表示できませんでした。");
+    image.src = reader.result;
+  };
+
+  reader.onerror = () => alert("写真を読み込めませんでした。");
+  reader.readAsDataURL(file);
+});
+
+$("savePhoto").addEventListener("click", () => {
+  if (!selectedPhotoData) return;
+
+  const photo = {
+    id: makeId(),
+    name: $("photoName").value.trim() || selectedPhotoName || "テストの写真",
+    data: selectedPhotoData,
+    createdAt: new Date().toISOString()
+  };
+
+  photos.unshift(photo);
+
+  if (!savePhotos()) {
+    photos.shift();
+    return;
+  }
+
+  selectedPhotoData = "";
+  selectedPhotoName = "";
+  $("photoInput").value = "";
+  $("photoName").value = "";
+  $("photoPreview").innerHTML = "";
+  $("savePhoto").disabled = true;
+
+  renderPhotoList();
+  renderPhotoOptions();
+  alert("写真を保存しました！");
+});
+
+function renderPhotoList() {
+  const area = $("photoList");
+  area.innerHTML = "";
+
+  if (!photos.length) {
+    area.innerHTML = '<div class="empty">保存した写真はありません。</div>';
+    return;
+  }
+
+  const grid = document.createElement("div");
+  grid.className = "photo-grid";
+
+  photos.forEach(photo => {
+    const card = document.createElement("div");
+    card.className = "photo-card";
+
+    const img = document.createElement("img");
+    img.src = photo.data;
+    img.alt = photo.name;
+
+    const name = document.createElement("p");
+    name.textContent = photo.name;
+
+    const view = document.createElement("button");
+    view.className = "secondary small full";
+    view.textContent = "表示";
+    view.addEventListener("click", () => {
+      $("photoPreview").innerHTML = "";
+      const large = document.createElement("img");
+      large.className = "preview-image";
+      large.src = photo.data;
+      large.alt = photo.name;
+      $("photoPreview").appendChild(large);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const remove = document.createElement("button");
+    remove.className = "danger small full";
+    remove.textContent = "削除";
+    remove.addEventListener("click", () => deletePhoto(photo.id));
+
+    card.append(img, name, view, remove);
+    grid.appendChild(card);
+  });
+
+  area.appendChild(grid);
+}
+
+function deletePhoto(id) {
+  if (!confirm("この写真を削除しますか？")) return;
+
+  const old = photos;
+  photos = photos.filter(p => p.id !== id);
+
+  if (!savePhotos()) {
+    photos = old;
+    return;
+  }
+
+  renderPhotoList();
+  renderPhotoOptions();
+  renderQuestionList();
+  renderReview();
+}
+
+function renderPhotoOptions() {
+  const select = $("questionPhoto");
+  const previous = select.value;
+
+  select.innerHTML = '<option value="">写真を関連付けない</option>';
+
+  photos.forEach(photo => {
+    const option = document.createElement("option");
+    option.value = photo.id;
+    option.textContent = photo.name;
+    select.appendChild(option);
+  });
+
+  if (photos.some(p => p.id === previous)) select.value = previous;
+}
+
+// 問題登録
+$("addQuestion").addEventListener("click", () => {
+  const question = $("question").value.trim();
+  const answer = $("answer").value.trim();
+
+  if (!question || !answer) {
+    alert("問題文と正解を入力してください。");
+    return;
+  }
+
+  const item = normalizeQuestion({
+    id: makeId(),
+    subject: $("subject").value,
+    question,
+    answer,
+    memo: $("memo").value.trim(),
+    photoId: $("questionPhoto").value,
+    attempts: 0,
+    correct: 0,
+    isVariant: false
+  });
+
+  questions.unshift(item);
+
+  if (!saveQuestions()) {
+    questions.shift();
+    return;
+  }
+
+  $("question").value = "";
+  $("answer").value = "";
+  $("memo").value = "";
+
+  renderQuestionList();
+  renderParentOptions();
+  renderStats();
+
+  alert("問題を登録しました！");
+});
+
+function renderQuestionList() {
+  const area = $("questionList");
+  area.innerHTML = "";
+
+  if (!questions.length) {
+    area.innerHTML = '<div class="empty">まだ問題がありません。</div>';
+    return;
+  }
+
+  questions.forEach(q => {
+    const card = document.createElement("div");
+    card.className = "list-item";
+
+    const title = document.createElement("div");
+    title.className = "list-title";
+    title.textContent =
+      (q.isVariant ? "【類題】" : "【元の問題】") +
+      q.subject + "：" + q.question;
+
+    const meta = document.createElement("div");
+    meta.className = "list-meta";
+    meta.textContent = "挑戦 " + q.attempts + " 回・正解 " + q.correct + " 回";
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const review = document.createElement("button");
+    review.className = "secondary small";
+    review.textContent = "復習する";
+    review.addEventListener("click", () => {
+      currentId = q.id;
+      answered = false;
+      showPage("review");
+    });
+
+    const remove = document.createElement("button");
+    remove.className = "danger small";
+    remove.textContent = "削除";
+    remove.addEventListener("click", () => deleteQuestion(q.id));
+
+    actions.append(review, remove);
+    card.append(title, meta, actions);
+
+    if (q.isVariant && q.parentId) {
+      const parent = questions.find(p => p.id === q.parentId);
+      const relation = document.createElement("div");
+      relation.className = "list-meta";
+      relation.textContent = parent
+        ? "元の問題：" + parent.question
+        : "元の問題は削除されています。";
+      card.appendChild(relation);
+    }
+
+    area.appendChild(card);
+  });
+}
+
+function deleteQuestion(id) {
+  const children = questions.filter(q => q.parentId === id);
+
+  let message = "この問題を削除しますか？";
+  if (children.length) {
+    message += "\nこの問題に関連する類題は削除されません。";
+  }
+
+  if (!confirm(message)) return;
+
+  const old = questions;
+  questions = questions.filter(q => q.id !== id);
+
+  if (!saveQuestions()) {
+    questions = old;
+    return;
+  }
+
+  if (currentId === id) {
+    currentId = null;
+    answered = false;
+  }
+
+  renderQuestionList();
+  renderParentOptions();
+  renderVariantList();
+  renderReview();
+  renderStats();
+}
+
+// 類題の元問題選択
+function renderParentOptions() {
+  const select = $("parentQuestion");
+  const previous = select.value;
+
+  select.innerHTML =
+    '<option value="">元の問題を選択してください</option>';
+
+  questions.filter(q => !q.isVariant).forEach(q => {
+    const option = document.createElement("option");
+    option.value = q.id;
+    option.textContent = q.subject + "：" + q.question.slice(0, 65);
+    select.appendChild(option);
+  });
+
+  if (questions.some(q => q.id === previous && !q.isVariant)) {
+    select.value = previous;
+  }
+}
+
+function getParentForVariant() {
+  const id = $("parentQuestion").value;
+  const parent = questions.find(q => q.id === id && !q.isVariant);
+
+  if (!parent) {
+    alert("先に元の問題を選んでください。");
+    return null;
+  }
+
+  return parent;
+}
+
+function addVariant(parent, question, answer, memo, generatorType) {
+  const variant = normalizeQuestion({
+    id: makeId(),
+    subject: parent.subject,
+    question,
+    answer,
+    memo,
+    attempts: 0,
+    correct: 0,
+    parentId: parent.id,
+    isVariant: true,
+    generatorType
+  });
+
+  questions.unshift(variant);
+
+  if (!saveQuestions()) {
+    questions.shift();
+    return false;
+  }
+
+  renderQuestionList();
+  renderVariantList();
+  renderStats();
+  return true;
+}
+
+// 自動生成：正負の数
+function generateIntegerProblem() {
+  const a = Math.floor(Math.random() * 19) - 9;
+  let b = Math.floor(Math.random() * 19) - 9;
+
+  while (b === 0) {
+    b = Math.floor(Math.random() * 19) - 9;
+  }
+
+  const sign = Math.random() < 0.5 ? "+" : "-";
+  const value = sign === "+" ? a + b : a - b;
+
+  const format = n => n < 0 ? "(" + n + ")" : String(n);
+  const question = format(a) + " " + sign + " " + format(b) + " = ?";
+  const answer = String(value);
+
+  return {
+    question,
+    answer,
+    memo: "符号に注意して計算しましょう。"
+  };
+}
+
+// 自動生成：文字式
+function generateAlgebraProblem() {
+  const a = Math.floor(Math.random() * 9) + 1;
+  const b = Math.floor(Math.random() * 9) + 1;
+  const c = Math.floor(Math.random() * 9) + 1;
+  const d = Math.floor(Math.random() * 9) + 1;
+
+  const xCoefficient = a + b;
+  const constant = c - d;
+
+  const question =
+    a + "x + " + b + "x + " + c + " - " + d + " を簡単にしなさい。";
+
+  let answer = xCoefficient + "x";
+
+  if (constant > 0) answer += " + " + constant;
+  if (constant < 0) answer += " - " + Math.abs(constant);
+
+  return {
+    question,
+    answer,
+    memo: "xの項どうし、数字どうしをそれぞれまとめましょう。"
+  };
+}
+
+// 自動生成：整数解の一次方程式
+function generateEquationProblem() {
+  const a = Math.floor(Math.random() * 8) + 2;
+  const solution = Math.floor(Math.random() * 11) - 5;
+  const b = Math.floor(Math.random() * 13) - 6;
+  const c = a * solution + b;
+
+  const bText = b < 0 ? " - " + Math.abs(b) : " + " + b;
+
+  return {
+    question: a + "x" + bText + " = " + c + "。xの値を求めなさい。",
+    answer: "x = " + solution,
+    memo: "両辺から定数項を整理し、xの係数で割りましょう。"
+  };
+}
+
+function generateProblem(type) {
+  if (type === "integer") return generateIntegerProblem();
+  if (type === "algebra") return generateAlgebraProblem();
+  return generateEquationProblem();
+}
+
+$("generateVariant").addEventListener("click", () => {
+  const parent = getParentForVariant();
+  if (!parent) return;
+
+  const type = $("generatorType").value;
+  const problem = generateProblem(type);
+
+  $("generatedPreview").innerHTML = "";
+
+  const card = document.createElement("div");
+  card.className = "list-item";
+
+  const title = document.createElement("strong");
+  title.textContent = "生成した類題";
+
+  const q = document.createElement("p");
+  q.textContent = problem.question;
+
+  const answer = document.createElement("p");
+  answer.textContent = "正解：" + problem.answer;
+
+  const note = document.createElement("p");
+  note.className = "muted";
+  note.textContent = problem.memo;
+
+  const save = document.createElement("button");
+  save.className = "primary full";
+  save.textContent = "この類題を登録する";
+
+  save.addEventListener("click", () => {
+    if (addVariant(parent, problem.question, problem.answer, problem.memo, type)) {
+      $("generatedPreview").innerHTML =
+        '<div class="result right">類題を登録しました！</div>';
+      alert("類題を登録しました！");
+    }
+  });
+
+  card.append(title, q, answer, note, save);
+  $("generatedPreview").appendChild(card);
+});
+
+// 手動類題作成
+$("saveManualVariant").addEventListener("click", () => {
+  const parent = getParentForVariant();
+  if (!parent) return;
+
+  const question = $("manualVariantQuestion").value.trim();
+  const answer = $("manualVariantAnswer").value.trim();
+  const memo = $("manualVariantMemo").value.trim();
+
+  if (!question || !answer) {
+    alert("類題の問題文と正解を入力してください。");
+    return;
+  }
+
+  if (!addVariant(parent, question, answer, memo, "manual")) return;
+
+  $("manualVariantQuestion").value = "";
+  $("manualVariantAnswer").value = "";
+  $("manualVariantMemo").value = "";
+
+  alert("手動で類題を登録しました！");
+});
+
+function renderVariantList() {
+  const area = $("variantList");
+  area.innerHTML = "";
+
+  const variants = questions.filter(q => q.isVariant);
+
+  if (!variants.length) {
+    area.innerHTML = '<div class="empty">まだ類題がありません。</div>';
+    return;
+  }
+
+  variants.forEach(q => {
+    const card = document.createElement("div");
+    card.className = "list-item";
+
+    const title = document.createElement("div");
+    title.className = "list-title";
+    title.textContent = q.question;
+
+    const parent = questions.find(p => p.id === q.parentId);
+    const meta = document.createElement("div");
+    meta.className = "list-meta";
+    meta.textContent = parent
+      ? "元の問題：" + parent.question
+      : "元の問題：削除済み";
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const review = document.createElement("button");
+    review.className = "secondary small";
+    review.textContent = "この類題を解く";
+    review.addEventListener("click", () => {
+      currentId = q.id;
+      answered = false;
+      showPage("review");
+    });
+
+    actions.appendChild(review);
+    card.append(title, meta, actions);
+    area.appendChild(card);
+  });
+}
+
+// 復習
+function renderReview() {
+  const area = $("reviewArea");
+  area.innerHTML = "";
+
+  if (!questions.length) {
+    area.className = "empty";
+    area.textContent = "まだ問題がありません。登録画面から問題を追加してください。";
+    return;
+  }
+
+  area.className = "";
+
+  let item = questions.find(q => q.id === currentId);
+
+  if (!item) {
+    item = questions[0];
+    currentId = item.id;
+    answered = false;
+  }
+
+  const type = document.createElement("div");
+  type.className = "muted";
+  type.textContent = item.isVariant ? "🧠 類題" : "📝 元の問題";
+
+  const subject = document.createElement("h3");
+  subject.textContent = item.subject;
+
+  const question = document.createElement("div");
+  question.style.fontSize = "18px";
+  question.style.fontWeight = "700";
+  question.style.whiteSpace = "pre-wrap";
+  question.style.lineHeight = "1.8";
+  question.textContent = item.question;
+
+  area.append(type, subject, question);
+
+  if (item.isVariant && item.parentId) {
+    const parent = questions.find(q => q.id === item.parentId);
+
+    if (parent) {
+      const parentInfo = document.createElement("div");
+      parentInfo.className = "list-item";
+      parentInfo.innerHTML = "<strong>元の問題</strong><br>" +
+        escapeHTML(parent.question);
+      area.appendChild(parentInfo);
+    }
+  }
+
+  if (item.photoId) {
+    const photo = photos.find(p => p.id === item.photoId);
+
+    if (photo) {
+      const img = document.createElement("img");
+      img.className = "preview-image";
+      img.src = photo.data;
+      img.alt = photo.name;
+      area.appendChild(img);
+    }
+  }
+
+  const input = document.createElement("textarea");
+  input.placeholder = "答えを入力してください";
+
+  const check = document.createElement("button");
+  check.className = "primary full";
+  check.textContent = "答え合わせ";
+
+  const result = document.createElement("div");
+
+  if (answered) {
+    input.disabled = true;
+    check.disabled = true;
+    check.textContent = "答え合わせ済み";
+    result.className = "result";
+    result.innerHTML =
+      "この問題は回答済みです。<br>次の問題へ進んでください。";
+  }
+
+  check.addEventListener("click", () => {
+    if (answered) return;
+
+    const userAnswer = input.value.trim();
+
+    if (!userAnswer) {
+      alert("答えを入力してください。");
+      return;
+    }
+
+    item.attempts += 1;
+
+    const isCorrect =
+      normalizeAnswer(userAnswer) === normalizeAnswer(item.answer);
+
+    if (isCorrect) item.correct += 1;
+
+    answered = true;
+
+    if (!saveQuestions()) {
+      item.attempts -= 1;
+      if (isCorrect) item.correct -= 1;
+      answered = false;
+      return;
+    }
+
+    input.disabled = true;
+    check.disabled = true;
+    check.textContent = "答え合わせ済み";
+
+    result.className = "result " + (isCorrect ? "right" : "wrong");
+    result.innerHTML =
+      "<strong>" + (isCorrect ? "正解！" : "もう一度確認しよう") +
+      "</strong><br>正解：" + escapeHTML(item.answer) +
+      (item.memo ? "<br><br>メモ：" + escapeHTML(item.memo) : "");
+
+    renderStats();
+    renderQuestionList();
+
+    if (item.isVariant) renderVariantList();
+  });
+
+  const next = document.createElement("button");
+  next.className = "secondary full";
+  next.textContent = "次の問題へ →";
+  next.addEventListener("click", moveNext);
+
+  area.append(input, check, result, next);
+}
+
+function moveNext() {
+  if (!questions.length) {
+    currentId = null;
+    answered = false;
+    renderReview();
+    return;
+  }
+
+  const index = questions.findIndex(q => q.id === currentId);
+  const nextIndex = index < 0 ? 0 : (index + 1) % questions.length;
+
+  currentId = questions[nextIndex].id;
+  answered = false;
+  renderReview();
+}
+
+// 学習記録
+function renderStats() {
+  const attempts = questions.reduce((sum, q) => sum + q.attempts, 0);
+  const correct = questions.reduce((sum, q) => sum + q.correct, 0);
+  const rate = attempts ? Math.round(correct / attempts * 100) : null;
+
+  $("today").textContent = new Date().toLocaleDateString("ja-JP");
+  $("total").textContent = questions.length;
+  $("correctTotal").textContent = correct;
+  $("statTotal").textContent = questions.length;
+  $("attemptTotal").textContent = attempts;
+  $("statCorrect").textContent = correct;
+  $("rate").textContent = rate === null ? "—" : rate + "%";
+
+  const progress = questions.length
+    ? Math.min(100, Math.round(correct / questions.length * 100))
+    : 0;
+
+  $("homeProgress").style.width = progress + "%";
+  $("homeProgressText").textContent = questions.length
+    ? "登録問題の正解回数を表示しています。"
+    : "問題を登録しましょう。";
+
+  const originals = questions.filter(q => !q.isVariant);
+  const variants = questions.filter(q => q.isVariant);
+
+  const originalAttempts = originals.reduce((s, q) => s + q.attempts, 0);
+  const originalCorrect = originals.reduce((s, q) => s + q.correct, 0);
+  const variantAttempts = variants.reduce((s, q) => s + q.attempts, 0);
+  const variantCorrect = variants.reduce((s, q) => s + q.correct, 0);
+
+  const accuracy = (c, a) => a ? Math.round(c / a * 100) + "%" : "回答なし";
+
+  $("variantStats").innerHTML =
+    "<div class='list-item'>元の問題：" + originals.length + " 問" +
+    "<br>挑戦 " + originalAttempts + " 回・正解 " + originalCorrect + " 回" +
+    "<br>正答率：" + accuracy(originalCorrect, originalAttempts) + "</div>" +
+    "<div class='list-item'>類題：" + variants.length + " 問" +
+    "<br>挑戦 " + variantAttempts + " 回・正解 " + variantCorrect + " 回" +
+    "<br>正答率：" + accuracy(variantCorrect, variantAttempts) + "</div>";
+
+  const subjects = ["数学", "英語", "国語", "理科", "社会", "その他"];
+
+  $("subjectStats").innerHTML = "";
+  $("subjectAccuracy").innerHTML = "";
+
+  subjects.forEach(subject => {
+    const list = questions.filter(q => q.subject === subject);
+    if (!list.length) return;
+
+    const a = list.reduce((s, q) => s + q.attempts, 0);
+    const c = list.reduce((s, q) => s + q.correct, 0);
+
+    const count = document.createElement("div");
+    count.className = "list-item";
+    count.textContent = subject + "：" + list.length + " 問";
+    $("subjectStats").appendChild(count);
+
+    const acc = document.createElement("div");
+    acc.className = "list-item";
+    acc.textContent = subject + "：" + accuracy(c, a);
+    $("subjectAccuracy").appendChild(acc);
+  });
+
+  if (!questions.length) {
+    $("subjectStats").innerHTML = '<div class="empty">問題を登録すると表示されます。</div>';
+    $("subjectAccuracy").innerHTML = '<div class="empty">問題を登録すると表示されます。</div>';
+  }
+}
+
+// バックアップ
+function downloadJSON(data, filename) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+$("backup").addEventListener("click", () => {
+  downloadJSON({
+    version: 3,
+    questions,
+    photos: []
+  }, "studyiz-questions-backup.json");
+});
+
+$("photoBackup").addEventListener("click", () => {
+  downloadJSON({
+    version: 3,
+    questions,
+    photos
+  }, "studyiz-full-backup.json");
+});
+
+// バックアップの復元
+$("restore").addEventListener("click", async () => {
+  const file = $("restoreInput").files[0];
+
+  if (!file) {
+    alert("先にバックアップファイルを選んでください。");
+    return;
+  }
+
+  if (!confirm("現在の問題・写真データを置き換えます。続けますか？")) {
+    return;
+  }
+
+  try {
+    const data = JSON.parse(await file.text());
+
+    let importedQuestions;
+    let importedPhotos;
+
+    if (Array.isArray(data)) {
+      importedQuestions = data;
+      importedPhotos = [];
+    } else {
+      importedQuestions = data.questions;
+      importedPhotos = data.photos || [];
+    }
+
+    if (!Array.isArray(importedQuestions) ||
+        !Array.isArray(importedPhotos)) {
+      throw new Error("形式が正しくありません。");
+    }
+
+    const oldQuestions = questions;
+    const oldPhotos = photos;
+
+    questions = importedQuestions.map(normalizeQuestion);
+    photos = importedPhotos.filter(p => p && typeof p.data === "string");
+
+    if (!saveQuestions() || !savePhotos()) {
+      questions = oldQuestions;
+      photos = oldPhotos;
+      saveQuestions();
+      savePhotos();
+      return;
+    }
+
+    currentId = questions.length ? questions[0].id : null;
+    answered = false;
+
+    renderPhotoList();
+    renderPhotoOptions();
+    renderQuestionList();
+    renderParentOptions();
+    renderVariantList();
+    renderReview();
+    renderStats();
+
+    alert("バックアップを復元しました！");
+  } catch (error) {
+    alert("復元できませんでした。バックアップファイルを確認してください。");
+  }
+});
+
+// 起動
+loadData();
+renderPhotoList();
+renderPhotoOptions();
+renderQuestionList();
+renderParentOptions();
+renderVariantList();
+renderReview();
+renderStats();
+
+})();
+</script>
+
+</body>
+</html>
